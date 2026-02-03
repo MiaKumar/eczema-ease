@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-slate-50 text-slate-800 antialiased;
+  }
+}
+
+/* Use dynamic viewport on mobile so scroll area height is correct */
+.min-h-screen-mobile {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+.h-screen-mobile {
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* Safe area for mobile notches */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Main content scroll area - ensure full scroll on mobile */
+.scroll-content {
+  -webkit-overflow-scrolling: touch;
+  overflow-anchor: none;
+}
