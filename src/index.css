@@ -7,7 +7,7 @@
     -webkit-tap-highlight-color: transparent;
   }
   body {
-    @apply bg-slate-50 text-slate-800 antialiased;
+    @apply bg-seafoam-50 text-sage-800 antialiased;
   }
 }
 

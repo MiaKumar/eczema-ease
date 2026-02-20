@@ -31,18 +31,18 @@ export default function CalendarView({ entries, currentMonth, onSelectDay }) {
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 overflow-hidden shadow-sm">
-      <div className="flex items-center justify-between px-4 py-3 border-b border-slate-200">
-        <button type="button" onClick={prevMonth} className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg">
+    <div className="bg-white rounded-xl border-2 border-seafoam-200 overflow-hidden shadow-sm">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-seafoam-200">
+        <button type="button" onClick={prevMonth} className="p-2 text-primary-600 hover:bg-seafoam-100 rounded-lg">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
         </button>
-        <span className="font-medium text-slate-800">{monthLabel}</span>
-        <button type="button" onClick={nextMonth} className="p-2 text-primary-600 hover:bg-primary-50 rounded-lg">
+        <span className="font-medium text-sage-800">{monthLabel}</span>
+        <button type="button" onClick={nextMonth} className="p-2 text-primary-600 hover:bg-seafoam-100 rounded-lg">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
         </button>
       </div>
       <div className="p-3">
-        <div className="grid grid-cols-7 gap-1 text-center text-xs text-slate-500 font-medium mb-2">
+        <div className="grid grid-cols-7 gap-1 text-center text-xs text-sage-600 font-medium mb-2">
           {WEEKDAYS.map((d) => (
             <div key={d}>{d}</div>
           ))}
@@ -58,8 +58,8 @@ export default function CalendarView({ entries, currentMonth, onSelectDay }) {
                 onClick={() => onSelectDay(cell.key)}
                 className={`aspect-square rounded-lg text-sm font-medium flex items-center justify-center ${
                   cell.hasData
-                    ? 'bg-primary-100 text-primary-700 hover:bg-primary-200'
-                    : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
+                    ? 'bg-seafoam-100 text-primary-700 hover:bg-seafoam-200'
+                    : 'bg-seafoam-50 text-sage-600 hover:bg-seafoam-100'
                 }`}
               >
                 {cell.key.slice(-2).replace(/^0/, '')}

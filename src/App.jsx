@@ -5,6 +5,7 @@ import TriggerLogging from './pages/TriggerLogging'
 import HistoryView from './pages/HistoryView'
 import Insights from './pages/Insights'
 import PhotoDocumentation from './pages/PhotoDocumentation'
+import Settings from './pages/Settings'
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="history" element={<HistoryView />} />
         <Route path="insights" element={<Insights />} />
         <Route path="photos" element={<PhotoDocumentation />} />
+        <Route path="settings" element={<Settings />} />
       </Route>
     </Routes>
   )

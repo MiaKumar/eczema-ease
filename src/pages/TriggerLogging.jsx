@@ -4,11 +4,17 @@ import DateSelector from '../components/DateSelector'
 
 const todayKey = () => new Date().toISOString().slice(0, 10)
 
-const QUICK_FOODS = ['Dairy', 'Eggs', 'Nuts', 'Wheat', 'Shellfish', 'Soy', 'Spicy', 'Alcohol', 'Other']
-const QUICK_PRODUCTS = ['Soap', 'Lotion', 'Detergent', 'Fragrance', 'Makeup', 'Sunscreen', 'Other']
-const QUICK_ACTIVITIES = ['Exercise', 'Swimming', 'Hot shower', 'Cold exposure', 'Sweating', 'Scratching', 'Other']
+const FOODS = ['Dairy', 'Eggs', 'Nuts', 'Gluten', 'Citrus', 'Shellfish', 'Soy', 'Spicy', 'Alcohol', 'Chocolate', 'Tomatoes']
+const FABRICS = ['Wool', 'Synthetic fabrics', 'Latex', 'Metals', 'Nickel', 'Rubber']
+const EMOTIONS = ['Stress', 'Anxiety', 'Depression', 'Anger', 'Excitement']
+const ENVIRONMENTAL = ['Pollen', 'Dust', 'Pet dander', 'Mold', 'Humidity', 'Temperature changes', 'Dry air']
+const MENSTRUAL = ['Period start', 'Ovulation', 'PMS']
+const PRODUCTS = ['Soap', 'Lotion', 'Detergent', 'Fragrance', 'Makeup', 'Sunscreen', 'Shampoo', 'Conditioner']
 
-function QuickAdd({ label, options, selected = [], onChange }) {
+function TriggerCategory({ label, options, selected = [], onChange, onAddCustom }) {
+  const [customValue, setCustomValue] = useState('')
+  const [showCustom, setShowCustom] = useState(false)
+
   const toggle = (item) => {
     const set = new Set(selected)
     if (set.has(item)) set.delete(item)
@@ -16,25 +22,80 @@ function QuickAdd({ label, options, selected = [], onChange }) {
     onChange([...set])
   }
 
+  const addCustom = () => {
+    if (customValue.trim() && !selected.includes(customValue.trim())) {
+      onChange([...selected, customValue.trim()])
+      setCustomValue('')
+      setShowCustom(false)
+    }
+  }
+
   return (
-    <div>
-      <p className="text-sm font-medium text-slate-700 mb-2">{label}</p>
+    <div className="space-y-2">
+      <div className="flex items-center justify-between">
+        <p className="text-sm font-semibold text-sage-800">{label}</p>
+        {!showCustom && (
+          <button
+            type="button"
+            onClick={() => setShowCustom(true)}
+            className="text-xs text-primary-600 hover:text-primary-700"
+          >
+            + Custom
+          </button>
+        )}
+      </div>
       <div className="flex flex-wrap gap-2">
         {options.map((opt) => (
           <button
             key={opt}
             type="button"
             onClick={() => toggle(opt)}
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
               selected.includes(opt)
-                ? 'bg-primary-600 text-white'
-                : 'bg-slate-100 text-slate-600 hover:bg-primary-100 hover:text-primary-700'
+                ? 'bg-primary-500 text-white shadow-sm'
+                : 'bg-seafoam-100 text-sage-700 hover:bg-seafoam-200'
             }`}
           >
             {opt}
           </button>
         ))}
+        {selected.filter((s) => !options.includes(s)).map((custom) => (
+          <button
+            key={custom}
+            type="button"
+            onClick={() => toggle(custom)}
+            className="px-3 py-1.5 rounded-lg text-xs font-medium bg-primary-500 text-white shadow-sm"
+          >
+            {custom} ×
+          </button>
+        ))}
       </div>
+      {showCustom && (
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={customValue}
+            onChange={(e) => setCustomValue(e.target.value)}
+            onKeyPress={(e) => e.key === 'Enter' && addCustom()}
+            placeholder="Enter custom trigger"
+            className="flex-1 rounded-lg border border-seafoam-300 px-2 py-1.5 text-xs"
+          />
+          <button
+            type="button"
+            onClick={addCustom}
+            className="px-3 py-1.5 bg-primary-500 text-white rounded-lg text-xs font-medium"
+          >
+            Add
+          </button>
+          <button
+            type="button"
+            onClick={() => { setShowCustom(false); setCustomValue('') }}
+            className="px-3 py-1.5 bg-seafoam-100 text-sage-700 rounded-lg text-xs"
+          >
+            Cancel
+          </button>
+        </div>
+      )}
     </div>
   )
 }
@@ -54,35 +115,59 @@ export default function TriggerLogging() {
     <div className="space-y-4">
       <DateSelector value={dateKey} onChange={setDateKey} />
 
-      <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm space-y-4">
-        <QuickAdd
+      <div className="bg-white rounded-2xl border-2 border-seafoam-200 p-4 shadow-sm space-y-6">
+        <TriggerCategory
           label="Foods"
-          options={QUICK_FOODS}
+          options={FOODS}
           selected={entry.foods ?? []}
           onChange={(foods) => persist({ foods })}
         />
-        <QuickAdd
-          label="Products used"
-          options={QUICK_PRODUCTS}
+        <TriggerCategory
+          label="Fabrics/Materials"
+          options={FABRICS}
+          selected={entry.fabrics ?? []}
+          onChange={(fabrics) => persist({ fabrics })}
+        />
+        <TriggerCategory
+          label="Emotions"
+          options={EMOTIONS}
+          selected={entry.emotions ?? []}
+          onChange={(emotions) => persist({ emotions })}
+        />
+        <TriggerCategory
+          label="Environmental"
+          options={ENVIRONMENTAL}
+          selected={entry.environmental ?? []}
+          onChange={(environmental) => persist({ environmental })}
+        />
+        <TriggerCategory
+          label="Menstrual Cycle"
+          options={MENSTRUAL}
+          selected={entry.menstrual ?? []}
+          onChange={(menstrual) => persist({ menstrual })}
+        />
+        <TriggerCategory
+          label="Products"
+          options={PRODUCTS}
           selected={entry.products ?? []}
           onChange={(products) => persist({ products })}
         />
-        <QuickAdd
-          label="Activities"
-          options={QUICK_ACTIVITIES}
-          selected={entry.activities ?? []}
-          onChange={(activities) => persist({ activities })}
+        <TriggerCategory
+          label="Other"
+          options={[]}
+          selected={entry.otherTriggers ?? []}
+          onChange={(otherTriggers) => persist({ otherTriggers })}
         />
       </div>
 
-      <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
-        <label className="block text-sm font-medium text-slate-700 mb-2" htmlFor="notes">
-          Notes
+      <div className="bg-white rounded-2xl border-2 border-seafoam-200 p-4 shadow-sm">
+        <label className="block text-sm font-semibold text-sage-800 mb-2" htmlFor="notes">
+          Additional Notes
         </label>
         <textarea
           id="notes"
           rows={4}
-          className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+          className="w-full rounded-lg border-2 border-seafoam-200 px-3 py-2 text-sm focus:ring-2 focus:ring-primary-400 focus:border-primary-400"
           placeholder="Any other triggers or notes..."
           value={entry.notes ?? ''}
           onChange={(e) => persist({ notes: e.target.value })}

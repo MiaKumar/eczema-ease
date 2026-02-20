@@ -25,9 +25,9 @@ const WEATHER_OPTIONS = [
 
 export default function QuickLogIcons({ sleep, stress, weather, onSleep, onStress, onWeather }) {
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm space-y-4">
+    <div className="bg-white rounded-xl border-2 border-seafoam-200 p-4 shadow-sm space-y-4">
       <div>
-        <p className="text-sm font-medium text-slate-700 mb-2">Sleep quality</p>
+        <p className="text-sm font-medium text-sage-700 mb-2">Sleep quality</p>
         <div className="flex flex-wrap gap-2">
           {SLEEP_OPTIONS.map(({ value, label, icon }) => (
             <button
@@ -36,8 +36,8 @@ export default function QuickLogIcons({ sleep, stress, weather, onSleep, onStres
               onClick={() => onSleep(value)}
               className={`flex flex-col items-center p-2 rounded-lg border-2 text-xs transition-colors ${
                 sleep === value
-                  ? 'border-primary-500 bg-primary-50 text-primary-700'
-                  : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-primary-300'
+                  ? 'border-primary-500 bg-seafoam-100 text-primary-700'
+                  : 'border-seafoam-200 bg-seafoam-50 text-sage-600 hover:border-primary-300'
               }`}
               title={label}
             >
@@ -48,7 +48,7 @@ export default function QuickLogIcons({ sleep, stress, weather, onSleep, onStres
         </div>
       </div>
       <div>
-        <p className="text-sm font-medium text-slate-700 mb-2">Stress level</p>
+        <p className="text-sm font-medium text-sage-700 mb-2">Stress level</p>
         <div className="flex flex-wrap gap-2">
           {STRESS_OPTIONS.map(({ value, label, icon }) => (
             <button
@@ -57,8 +57,8 @@ export default function QuickLogIcons({ sleep, stress, weather, onSleep, onStres
               onClick={() => onStress(value)}
               className={`flex flex-col items-center p-2 rounded-lg border-2 text-xs transition-colors ${
                 stress === value
-                  ? 'border-primary-500 bg-primary-50 text-primary-700'
-                  : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-primary-300'
+                  ? 'border-primary-500 bg-seafoam-100 text-primary-700'
+                  : 'border-seafoam-200 bg-seafoam-50 text-sage-600 hover:border-primary-300'
               }`}
               title={label}
             >
@@ -69,7 +69,7 @@ export default function QuickLogIcons({ sleep, stress, weather, onSleep, onStres
         </div>
       </div>
       <div>
-        <p className="text-sm font-medium text-slate-700 mb-2">Weather</p>
+        <p className="text-sm font-medium text-sage-700 mb-2">Weather</p>
         <div className="flex flex-wrap gap-2">
           {WEATHER_OPTIONS.map(({ value, label, icon }) => (
             <button
@@ -78,8 +78,8 @@ export default function QuickLogIcons({ sleep, stress, weather, onSleep, onStres
               onClick={() => onWeather(value)}
               className={`flex flex-col items-center p-2 rounded-lg border-2 text-xs transition-colors ${
                 weather === value
-                  ? 'border-primary-500 bg-primary-50 text-primary-700'
-                  : 'border-slate-200 bg-slate-50 text-slate-600 hover:border-primary-300'
+                  ? 'border-primary-500 bg-seafoam-100 text-primary-700'
+                  : 'border-seafoam-200 bg-seafoam-50 text-sage-600 hover:border-primary-300'
               }`}
               title={label}
             >

@@ -22,16 +22,16 @@ export default function InsightsLineChart({ data, valueKey, label }) {
 
   if (!hasData) {
     return (
-      <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
-        <p className="text-sm font-medium text-slate-700 mb-2">{label}</p>
-        <p className="text-slate-500 text-sm py-6 text-center">No data in the last 7 days</p>
+      <div className="bg-white rounded-xl border-2 border-seafoam-200 p-4 shadow-sm">
+        <p className="text-sm font-medium text-sage-700 mb-2">{label}</p>
+        <p className="text-sage-500 text-sm py-6 text-center">No data in the last 7 days</p>
       </div>
     )
   }
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
-      <p className="text-sm font-medium text-slate-700 mb-3">{label}</p>
+    <div className="bg-white rounded-xl border-2 border-seafoam-200 p-4 shadow-sm">
+      <p className="text-sm font-medium text-sage-700 mb-3">{label}</p>
       <div className="relative w-full" style={{ height: CHART_HEIGHT + 24 }}>
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-[100px] text-primary-500">
           <polyline
@@ -58,7 +58,7 @@ export default function InsightsLineChart({ data, valueKey, label }) {
             )
           })}
         </svg>
-        <div className="absolute bottom-0 left-0 right-0 flex justify-between text-[10px] text-slate-500">
+        <div className="absolute bottom-0 left-0 right-0 flex justify-between text-[10px] text-sage-500">
           {data.map((d) => (
             <span key={d.date} className="flex-1 text-center truncate" title={d.label}>
               {d.label.split(' ')[0]}
@@ -66,7 +66,7 @@ export default function InsightsLineChart({ data, valueKey, label }) {
           ))}
         </div>
       </div>
-      <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+      <div className="flex justify-between text-[10px] text-sage-400 mt-1">
         <span>0</span>
         <span>10</span>
       </div>

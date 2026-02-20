@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-export default function SeverityChart({ entries, limit = 14 }) {
+export default function SeverityChart({ entries, limit = 14, timeframeLabel = '' }) {
   const data = useMemo(() => {
     const keys = Object.keys(entries).sort().slice(-limit)
     return keys.map((key) => {
@@ -14,7 +14,7 @@ export default function SeverityChart({ entries, limit = 14 }) {
 
   if (data.length === 0) {
     return (
-      <div className="bg-white rounded-xl border border-slate-200 p-6 shadow-sm text-center text-slate-500 text-sm">
+      <div className="bg-white rounded-xl border-2 border-seafoam-200 p-6 shadow-sm text-center text-sage-500 text-sm">
         Log itch or pain on the Home screen to see trends here.
       </div>
     )
@@ -24,8 +24,10 @@ export default function SeverityChart({ entries, limit = 14 }) {
   const chartHeight = 120
 
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
-      <p className="text-sm font-medium text-slate-700 mb-3">Severity trend (last 14 days)</p>
+    <div className="bg-white rounded-xl border-2 border-seafoam-200 p-4 shadow-sm">
+      <p className="text-sm font-medium text-sage-700 mb-3">
+        Severity trend{timeframeLabel ? ` (${timeframeLabel})` : ` (last ${limit} days)`}
+      </p>
       <div className="flex items-end gap-1 h-[140px] overflow-x-auto pb-8">
         {data.map(({ key, label, itch, pain }) => {
           const itchH = itch != null ? (itch / maxVal) * chartHeight : 0
@@ -48,12 +50,12 @@ export default function SeverityChart({ entries, limit = 14 }) {
                   />
                 )}
               </div>
-              <span className="text-[10px] text-slate-500 mt-1">{label}</span>
+              <span className="text-[10px] text-sage-500 mt-1">{label}</span>
             </div>
           )
         })}
       </div>
-      <div className="flex gap-4 text-xs text-slate-500 mt-2">
+      <div className="flex gap-4 text-xs text-sage-500 mt-2">
         <span><span className="inline-block w-3 h-3 rounded bg-primary-500 mr-1" /> Itch</span>
         <span><span className="inline-block w-3 h-3 rounded bg-primary-300 mr-1" /> Pain</span>
       </div>

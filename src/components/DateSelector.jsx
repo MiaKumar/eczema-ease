@@ -30,11 +30,11 @@ export default function DateSelector({ value, onChange }) {
   const canGoNext = dateKey < todayKey()
 
   return (
-    <div className="flex items-center justify-between bg-white rounded-xl border border-slate-200 p-3 shadow-sm">
+    <div className="flex items-center justify-between bg-white rounded-xl border-2 border-seafoam-200 p-3 shadow-sm">
       <button
         type="button"
         onClick={goPrev}
-        className="p-2 rounded-lg text-primary-600 hover:bg-primary-50 active:bg-primary-100"
+        className="p-2 rounded-lg text-primary-600 hover:bg-seafoam-100 active:bg-seafoam-200"
         aria-label="Previous day"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -42,7 +42,7 @@ export default function DateSelector({ value, onChange }) {
         </svg>
       </button>
       <div className="text-center">
-        <p className="text-sm font-medium text-slate-800">{displayDate}</p>
+        <p className="text-sm font-medium text-sage-800">{displayDate}</p>
         {isToday && (
           <p className="text-xs text-primary-600 font-medium">Today</p>
         )}
@@ -51,7 +51,7 @@ export default function DateSelector({ value, onChange }) {
         type="button"
         onClick={goNext}
         disabled={!canGoNext}
-        className="p-2 rounded-lg text-primary-600 hover:bg-primary-50 active:bg-primary-100 disabled:opacity-40 disabled:pointer-events-none"
+        className="p-2 rounded-lg text-primary-600 hover:bg-seafoam-100 active:bg-seafoam-200 disabled:opacity-40 disabled:pointer-events-none"
         aria-label="Next day"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

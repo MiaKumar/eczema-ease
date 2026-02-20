@@ -85,13 +85,13 @@ export default function PhotoDocumentation() {
     <div className="space-y-4">
       <DateSelector value={dateKey} onChange={setDateKey} />
 
-      <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
-        <p className="text-sm font-medium text-slate-700 mb-3">Photos for this date</p>
+      <div className="bg-white rounded-xl border-2 border-seafoam-200 p-4 shadow-sm">
+        <p className="text-sm font-semibold text-sage-800 mb-3">Photos for this date</p>
         <div className="flex gap-3 mb-3">
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="flex-1 py-3 rounded-lg border-2 border-dashed border-primary-300 text-primary-600 font-medium text-sm hover:bg-primary-50"
+            className="flex-1 py-3 rounded-lg border-2 border-dashed border-primary-400 text-primary-600 font-medium text-sm hover:bg-seafoam-50"
           >
             Upload photo
           </button>
@@ -105,7 +105,7 @@ export default function PhotoDocumentation() {
           <button
             type="button"
             onClick={() => setShowCamera(true)}
-            className="flex-1 py-3 rounded-lg bg-primary-600 text-white font-medium text-sm hover:bg-primary-700"
+            className="flex-1 py-3 rounded-lg bg-primary-500 text-white font-medium text-sm hover:bg-primary-600"
           >
             Take photo
           </button>
@@ -144,7 +144,7 @@ export default function PhotoDocumentation() {
 
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
         {photos.map((photo) => (
-          <div key={photo.id} className="relative group rounded-xl overflow-hidden border border-slate-200 bg-slate-100 aspect-square">
+          <div key={photo.id} className="relative group rounded-xl overflow-hidden border-2 border-seafoam-200 bg-seafoam-50 aspect-square">
             <img src={photo.dataUrl} alt="" className="w-full h-full object-cover" />
             <button
               type="button"
@@ -158,7 +158,7 @@ export default function PhotoDocumentation() {
         ))}
       </div>
       {photos.length === 0 && (
-        <p className="text-slate-500 text-sm text-center py-4">No photos for this date yet.</p>
+        <p className="text-sage-500 text-sm text-center py-4">No photos for this date yet.</p>
       )}
     </div>
   )
