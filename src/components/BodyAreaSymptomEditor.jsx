@@ -3,7 +3,7 @@ import SeverityScale from './SeverityScale'
 
 export default function BodyAreaSymptomEditor({ area, symptoms, onUpdate, onClose }) {
   const [localSymptoms, setLocalSymptoms] = useState(symptoms || {
-    darkColor: null,
+    redness: null,
     swelling: null,
     itch: null,
     pain: null,
@@ -49,9 +49,9 @@ export default function BodyAreaSymptomEditor({ area, symptoms, onUpdate, onClos
       </div>
       <div className="space-y-4">
         <SeverityScale
-          label="Dark color (0–10)"
-          value={localSymptoms.darkColor}
-          onChange={(v) => update('darkColor', v)}
+          label="Redness (0–10)"
+          value={localSymptoms.redness}
+          onChange={(v) => update('redness', v)}
         />
         <SeverityScale
           label="Swelling (0–10)"

@@ -20,7 +20,7 @@ export default function EnhancedBodyMap({ bodyAreas = {}, onUpdate }) {
       setEditingArea(area)
     } else {
       // If new area, add it with empty symptoms
-      onUpdate({ ...bodyAreas, [area]: { darkColor: null, swelling: null, itch: null, pain: null } })
+      onUpdate({ ...bodyAreas, [area]: { redness: null, swelling: null, itch: null, pain: null } })
       setEditingArea(area)
     }
   }
@@ -38,7 +38,7 @@ export default function EnhancedBodyMap({ bodyAreas = {}, onUpdate }) {
 
   const hasSymptoms = (area) => {
     const s = bodyAreas[area]
-    return s && (s.darkColor != null || s.swelling != null || s.itch != null || s.pain != null)
+    return s && (s.redness != null || s.swelling != null || s.itch != null || s.pain != null)
   }
 
   const frontSelected = useMemo(() => {
