@@ -16,12 +16,12 @@ export function getLast7DaysEntries(entries) {
   return keys.map((key) => ({ key, entry: entries[key] ?? null }))
 }
 
-/** Symptom trend: array of { date, label, darkColor, swelling, itch, pain } for last 7 days */
+/** Symptom trend: array of { date, label, redness, swelling, itch, pain } for last 7 days */
 export function getSymptomTrendData(entries) {
   return getLast7DaysEntries(entries).map(({ key, entry }) => ({
     date: key,
     label: new Date(key + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }).replace(',', ''),
-    darkColor: entry?.darkColor ?? null,
+    redness: entry?.redness ?? entry?.darkColor ?? null,
     swelling: entry?.swelling ?? null,
     itch: entry?.itch ?? null,
     pain: entry?.pain ?? null,
@@ -93,7 +93,7 @@ export function getWeeklySummary(entries) {
   const weekEntries = keys.map((k) => entries[k]).filter(Boolean)
   const withItch = weekEntries.filter((e) => e.itch != null)
   const withPain = weekEntries.filter((e) => e.pain != null)
-  const withDarkColor = weekEntries.filter((e) => e.darkColor != null)
+  const withRedness = weekEntries.filter((e) => (e.redness ?? e.darkColor) != null)
   const withSwelling = weekEntries.filter((e) => e.swelling != null)
   const withStress = weekEntries.filter((e) => e.stress != null)
   const withSleep = weekEntries.filter((e) => e.sleep != null)
@@ -129,8 +129,9 @@ export function getWeeklySummary(entries) {
   const modeSleep = mode(withSleep, 'sleep')
   const modeFlare = mode(withFlare, 'flareSeverity')
 
+  const rednessVal = (e) => e.redness ?? e.darkColor
   return {
-    avgDarkColor: avg(withDarkColor, 'darkColor'),
+    avgRedness: withRedness.length ? withRedness.reduce((s, e) => s + rednessVal(e), 0) / withRedness.length : null,
     avgSwelling: avg(withSwelling, 'swelling'),
     avgItch: avg(withItch, 'itch'),
     avgPain: avg(withPain, 'pain'),

@@ -98,10 +98,10 @@ export default function HistoryView() {
                   Flare Severity: <span className="text-primary-600">{FLARE_LABELS[entry.flareSeverity] || entry.flareSeverity}</span>
                 </p>
               )}
-              {(entry.darkColor != null || entry.swelling != null || entry.itch != null || entry.pain != null) && (
+              {((entry.redness ?? entry.darkColor) != null || entry.swelling != null || entry.itch != null || entry.pain != null) && (
                 <div>
                   <p className="font-medium text-sage-700 mb-1">Overall Symptoms:</p>
-                  {entry.darkColor != null && <p>Dark color: {entry.darkColor}/10</p>}
+                  {(entry.redness ?? entry.darkColor) != null && <p>Redness: {entry.redness ?? entry.darkColor}/10</p>}
                   {entry.swelling != null && <p>Swelling: {entry.swelling}/10</p>}
                   {entry.itch != null && <p>Itch: {entry.itch}/10</p>}
                   {entry.pain != null && <p>Pain: {entry.pain}/10</p>}
@@ -113,7 +113,7 @@ export default function HistoryView() {
                   {Object.entries(entry.bodyAreas).map(([area, symptoms]) => (
                     <div key={area} className="ml-2 mb-1 text-xs">
                       <p className="font-medium">{area.replace(/-/g, ' ')}:</p>
-                      {symptoms.darkColor != null && <span className="text-sage-600">Dark {symptoms.darkColor}/10 </span>}
+                      {(symptoms.redness ?? symptoms.darkColor) != null && <span className="text-sage-600">Redness {symptoms.redness ?? symptoms.darkColor}/10 </span>}
                       {symptoms.swelling != null && <span className="text-sage-600">Swelling {symptoms.swelling}/10 </span>}
                       {symptoms.itch != null && <span className="text-sage-600">Itch {symptoms.itch}/10 </span>}
                       {symptoms.pain != null && <span className="text-sage-600">Pain {symptoms.pain}/10</span>}

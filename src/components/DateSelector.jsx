@@ -30,7 +30,7 @@ export default function DateSelector({ value, onChange }) {
   const canGoNext = dateKey < todayKey()
 
   return (
-    <div className="flex items-center justify-between bg-white rounded-xl border-2 border-seafoam-200 p-3 shadow-sm">
+    <div className="flex items-center justify-between bg-white rounded-card border-2 border-seafoam-200 p-3 shadow-soft">
       <button
         type="button"
         onClick={goPrev}

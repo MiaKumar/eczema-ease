@@ -1,3 +1,5 @@
+import { Moon, Brain, CloudSun } from 'lucide-react'
+
 const SLEEP_OPTIONS = [
   { value: 1, label: 'Poor', icon: '😴' },
   { value: 2, label: 'Fair', icon: '😐' },
@@ -25,9 +27,12 @@ const WEATHER_OPTIONS = [
 
 export default function QuickLogIcons({ sleep, stress, weather, onSleep, onStress, onWeather }) {
   return (
-    <div className="bg-white rounded-xl border-2 border-seafoam-200 p-4 shadow-sm space-y-4">
+    <div className="bg-white rounded-card border-2 border-seafoam-200 p-5 shadow-soft space-y-5">
       <div>
-        <p className="text-sm font-medium text-sage-700 mb-2">Sleep quality</p>
+        <div className="flex items-center gap-2 mb-2">
+          <Moon className="w-5 h-5 text-primary-500" strokeWidth={1.5} />
+          <p className="text-sm font-medium text-sage-700">Sleep quality</p>
+        </div>
         <div className="flex flex-wrap gap-2">
           {SLEEP_OPTIONS.map(({ value, label, icon }) => (
             <button
@@ -48,7 +53,10 @@ export default function QuickLogIcons({ sleep, stress, weather, onSleep, onStres
         </div>
       </div>
       <div>
-        <p className="text-sm font-medium text-sage-700 mb-2">Stress level</p>
+        <div className="flex items-center gap-2 mb-2">
+          <Brain className="w-5 h-5 text-primary-500" strokeWidth={1.5} />
+          <p className="text-sm font-medium text-sage-700">Stress level</p>
+        </div>
         <div className="flex flex-wrap gap-2">
           {STRESS_OPTIONS.map(({ value, label, icon }) => (
             <button
@@ -69,7 +77,10 @@ export default function QuickLogIcons({ sleep, stress, weather, onSleep, onStres
         </div>
       </div>
       <div>
-        <p className="text-sm font-medium text-sage-700 mb-2">Weather</p>
+        <div className="flex items-center gap-2 mb-2">
+          <CloudSun className="w-5 h-5 text-primary-500" strokeWidth={1.5} />
+          <p className="text-sm font-medium text-sage-700">Weather</p>
+        </div>
         <div className="flex flex-wrap gap-2">
           {WEATHER_OPTIONS.map(({ value, label, icon }) => (
             <button

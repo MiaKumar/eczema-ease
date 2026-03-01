@@ -43,6 +43,26 @@ export default {
           800: '#2C5F5D',
           900: '#1E3F3D',
         },
+        score: {
+          good: '#22c55e',
+          moderate: '#eab308',
+          challenging: '#f97316',
+        },
+      },
+      borderRadius: {
+        card: '16px',
+        button: '12px',
+      },
+      boxShadow: {
+        soft: '0 2px 12px rgba(0,0,0,0.06)',
+        soft-lg: '0 4px 20px rgba(0,0,0,0.08)',
+      },
+      transitionDuration: {
+        250: '250ms',
+        300: '300ms',
+      },
+      minHeight: {
+        touch: '44px',
       },
     },
   },

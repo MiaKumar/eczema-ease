@@ -28,8 +28,8 @@ export default function Insights() {
         <div className="space-y-4">
           <InsightsLineChart
             data={trendData}
-            valueKey="darkColor"
-            label="Dark color severity (last 7 days)"
+            valueKey="redness"
+            label="Redness severity (last 7 days)"
           />
           <InsightsLineChart
             data={trendData}
@@ -95,10 +95,10 @@ export default function Insights() {
         <h3 className="text-sm font-semibold text-sage-700 mb-3">Weekly Summary</h3>
         <div className="bg-white rounded-xl border-2 border-seafoam-200 p-4 shadow-sm">
           <dl className="grid grid-cols-1 gap-3 text-sm">
-            {summary.avgDarkColor != null && (
+            {summary.avgRedness != null && (
               <div className="flex justify-between">
-                <dt className="text-sage-600">Average dark color severity</dt>
-                <dd className="font-medium text-sage-800">{summary.avgDarkColor.toFixed(1)}</dd>
+                <dt className="text-sage-600">Average redness severity</dt>
+                <dd className="font-medium text-sage-800">{summary.avgRedness.toFixed(1)}</dd>
               </div>
             )}
             {summary.avgSwelling != null && (

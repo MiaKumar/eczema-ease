@@ -20,7 +20,7 @@ export default function EnhancedBodyMap({ bodyAreas = {}, onUpdate }) {
       setEditingArea(area)
     } else {
       // If new area, add it with empty symptoms
-      onUpdate({ ...bodyAreas, [area]: { darkColor: null, swelling: null, itch: null, pain: null } })
+      onUpdate({ ...bodyAreas, [area]: { redness: null, swelling: null, itch: null, pain: null } })
       setEditingArea(area)
     }
   }
@@ -38,7 +38,7 @@ export default function EnhancedBodyMap({ bodyAreas = {}, onUpdate }) {
 
   const hasSymptoms = (area) => {
     const s = bodyAreas[area]
-    return s && (s.darkColor != null || s.swelling != null || s.itch != null || s.pain != null)
+    return s && (s.redness != null || s.darkColor != null || s.swelling != null || s.itch != null || s.pain != null)
   }
 
   const frontSelected = useMemo(() => {
@@ -116,19 +116,19 @@ export default function EnhancedBodyMap({ bodyAreas = {}, onUpdate }) {
       </div>
 
       {editingArea && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4" onClick={() => setEditingArea(null)}>
-          <div onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 bg-black/50 z-50 flex items-end sm:items-center justify-center p-4 animate-in" onClick={() => setEditingArea(null)}>
+          <div onClick={(e) => e.stopPropagation()} className="w-full max-w-md max-h-[90vh] overflow-y-auto">
             <BodyAreaSymptomEditor
               area={editingArea}
               symptoms={bodyAreas[editingArea]}
-              onUpdate={updateAreaSymptoms}
-              onClose={() => setEditingArea(null)}
+              onSave={updateAreaSymptoms}
+              onCancel={() => setEditingArea(null)}
             />
             {bodyAreas[editingArea] && (
               <button
                 type="button"
                 onClick={() => removeArea(editingArea)}
-                className="mt-2 w-full py-2 bg-red-50 text-red-600 rounded-xl text-sm font-medium"
+                className="mt-3 w-full min-h-touch py-3 bg-red-50 text-red-600 rounded-button text-sm font-medium"
               >
                 Remove Area
               </button>
