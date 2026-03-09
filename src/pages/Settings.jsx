@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react'
+import { getUserProfile, saveUserProfile, clearOnboardingFlag } from '../data/storage'
 
 const STORAGE_KEY = 'eczemaease_settings'
+
+const GENDER_OPTIONS = ['Female', 'Male', 'Non-binary', 'Prefer not to say']
+const YEARS = Array.from({ length: 2024 - 1940 + 1 }, (_, i) => 1940 + i).reverse()
+const ETHNICITY_OPTIONS = [
+  'Asian', 'Black/African American', 'Hispanic/Latino', 'White/Caucasian',
+  'Native American', 'Pacific Islander', 'Mixed', 'Other', 'Prefer not to say',
+]
 
 function getSettings() {
   try {
@@ -23,6 +31,8 @@ function saveSettings(settings) {
 export default function Settings() {
   const [settings, setSettings] = useState(getSettings)
   const [permissionStatus, setPermissionStatus] = useState('default')
+  const [profile, setProfile] = useState(() => getUserProfile() || {})
+  const [profileSaved, setProfileSaved] = useState(false)
 
   useEffect(() => {
     if ('Notification' in window) {
@@ -97,11 +107,92 @@ export default function Settings() {
     }
   }, [settings])
 
+  const updateProfile = (updates) => setProfile((p) => ({ ...p, ...updates }))
+
+  const handleSaveProfile = () => {
+    saveUserProfile(profile)
+    setProfileSaved(true)
+    setTimeout(() => setProfileSaved(false), 2000)
+  }
+
+  const handleResetApp = () => {
+    if (window.confirm('This will show the onboarding setup again on next launch. Your tracking data will stay. Continue?')) {
+      clearOnboardingFlag()
+      window.location.reload()
+    }
+  }
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <h2 className="text-lg font-semibold text-sage-800">Settings</h2>
 
-      <div className="bg-white rounded-2xl border-2 border-seafoam-200 p-4 shadow-sm space-y-4">
+      {/* Profile */}
+      <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card">
+        <h3 className="text-sm font-semibold text-sage-800 mb-3">Profile</h3>
+        <p className="text-xs text-sage-600 mb-4">Your onboarding answers. You can update them anytime.</p>
+        <div className="space-y-3">
+          <div>
+            <label className="text-xs font-medium text-sage-700 block mb-1">Gender</label>
+            <select
+              value={profile.gender ?? ''}
+              onChange={(e) => updateProfile({ gender: e.target.value })}
+              className="w-full py-2 px-3 rounded-lg border border-seafoam-200 text-sage-800 text-sm"
+            >
+              <option value="">Select</option>
+              {GENDER_OPTIONS.map((opt) => (
+                <option key={opt} value={opt}>{opt}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="text-xs font-medium text-sage-700 block mb-1">Year born</label>
+            <select
+              value={profile.yearBorn ?? ''}
+              onChange={(e) => updateProfile({ yearBorn: e.target.value ? parseInt(e.target.value, 10) : null })}
+              className="w-full py-2 px-3 rounded-lg border border-seafoam-200 text-sage-800 text-sm"
+            >
+              <option value="">Select</option>
+              {YEARS.map((y) => (
+                <option key={y} value={y}>{y}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="text-xs font-medium text-sage-700 block mb-1">Ethnicity (optional)</label>
+            <select
+              value={profile.ethnicity ?? ''}
+              onChange={(e) => updateProfile({ ethnicity: e.target.value })}
+              className="w-full py-2 px-3 rounded-lg border border-seafoam-200 text-sage-800 text-sm"
+            >
+              <option value="">Select (optional)</option>
+              {ETHNICITY_OPTIONS.map((opt) => (
+                <option key={opt} value={opt}>{opt}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="text-xs font-medium text-sage-700 block mb-1">Zip code (optional)</label>
+            <input
+              type="text"
+              inputMode="numeric"
+              maxLength={5}
+              placeholder="12345"
+              value={profile.zipCode ?? ''}
+              onChange={(e) => updateProfile({ zipCode: e.target.value.replace(/\D/g, '').slice(0, 5) })}
+              className="w-full py-2 px-3 rounded-lg border border-seafoam-200 text-sage-800 text-sm"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={handleSaveProfile}
+            className="w-full py-2 rounded-lg bg-primary-500 text-white text-sm font-medium hover:bg-primary-600"
+          >
+            {profileSaved ? 'Saved!' : 'Save profile'}
+          </button>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card space-y-4">
         <div>
           <h3 className="text-sm font-semibold text-sage-800 mb-3">Notifications</h3>
           {permissionStatus === 'default' && (
@@ -173,12 +264,27 @@ export default function Settings() {
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border-2 border-seafoam-200 p-4 shadow-sm">
+      <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card">
         <h3 className="text-sm font-semibold text-sage-800 mb-2">About</h3>
         <p className="text-xs text-sage-600">
           EczemaEase helps you track symptoms, triggers, and treatments to better understand your eczema patterns.
         </p>
         <p className="text-xs text-sage-500 mt-2">Version 1.0.0</p>
+      </div>
+
+      {/* Reset App - for testing */}
+      <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card">
+        <h3 className="text-sm font-semibold text-sage-800 mb-2">Reset App</h3>
+        <p className="text-xs text-sage-600 mb-3">
+          Show the onboarding setup again on next launch. Your entries and photos are not deleted.
+        </p>
+        <button
+          type="button"
+          onClick={handleResetApp}
+          className="py-2 px-4 rounded-lg border-2 border-sage-300 text-sage-700 text-sm font-medium hover:bg-seafoam-50"
+        >
+          Reset onboarding
+        </button>
       </div>
     </div>
   )

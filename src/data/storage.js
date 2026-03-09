@@ -1,6 +1,8 @@
 const STORAGE_KEYS = {
   ENTRIES: 'eczemaease_entries',
   PHOTOS: 'eczemaease_photos',
+  USER_PROFILE: 'eczemaease_userProfile',
+  ONBOARDING_COMPLETE: 'eczemaease_hasCompletedOnboarding',
 }
 
 function getStored(key, defaultValue = {}) {
@@ -70,4 +72,47 @@ export function removePhoto(dateKey, photoId) {
   if (!photos[dateKey]) return false
   photos[dateKey] = photos[dateKey].filter((p) => p.id !== photoId)
   return savePhotos(photos)
+}
+
+/** @returns {{ gender?: string, yearBorn?: number, ethnicity?: string, zipCode?: string, completedAt?: string } | null } */
+export function getUserProfile() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEYS.USER_PROFILE)
+    return raw ? JSON.parse(raw) : null
+  } catch {
+    return null
+  }
+}
+
+/** @param {{ gender?: string, yearBorn?: number, ethnicity?: string, zipCode?: string, completedAt?: string }} profile */
+export function saveUserProfile(profile) {
+  const current = getUserProfile() || {}
+  return setStored(STORAGE_KEYS.USER_PROFILE, { ...current, ...profile })
+}
+
+export function hasCompletedOnboarding() {
+  try {
+    return localStorage.getItem(STORAGE_KEYS.ONBOARDING_COMPLETE) === 'true'
+  } catch {
+    return false
+  }
+}
+
+export function setOnboardingComplete() {
+  try {
+    localStorage.setItem(STORAGE_KEYS.ONBOARDING_COMPLETE, 'true')
+    return true
+  } catch {
+    return false
+  }
+}
+
+/** Clears onboarding flag (for testing / reset app) */
+export function clearOnboardingFlag() {
+  try {
+    localStorage.removeItem(STORAGE_KEYS.ONBOARDING_COMPLETE)
+    return true
+  } catch {
+    return false
+  }
 }
