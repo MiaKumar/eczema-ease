@@ -18,6 +18,8 @@ export default function BodyAreaSymptomEditor({ area, symptoms, onUpdate, onClos
   const areaLabels = {
     'front-head': 'Head (Front)',
     'back-head': 'Head (Back)',
+    'front-left-eye': 'Left Eye',
+    'front-right-eye': 'Right Eye',
     'front-eyes': 'Eyes',
     'front-neck': 'Neck (Front)',
     'back-neck': 'Neck (Back)',
@@ -52,21 +54,25 @@ export default function BodyAreaSymptomEditor({ area, symptoms, onUpdate, onClos
           label="Redness (0–10)"
           value={localSymptoms.redness}
           onChange={(v) => update('redness', v)}
+          showDefinition
         />
         <SeverityScale
           label="Swelling (0–10)"
           value={localSymptoms.swelling}
           onChange={(v) => update('swelling', v)}
+          showDefinition
         />
         <SeverityScale
           label="Itch (0–10)"
           value={localSymptoms.itch}
           onChange={(v) => update('itch', v)}
+          showDefinition
         />
         <SeverityScale
           label="Pain (0–10)"
           value={localSymptoms.pain}
           onChange={(v) => update('pain', v)}
+          showDefinition
         />
       </div>
     </div>

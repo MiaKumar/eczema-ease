@@ -1,9 +1,7 @@
-const DAYS = 7
-
-function getLast7DayKeys() {
+function getLastNDaysKeys(days) {
   const keys = []
   const d = new Date()
-  for (let i = DAYS - 1; i >= 0; i--) {
+  for (let i = days - 1; i >= 0; i--) {
     const x = new Date(d)
     x.setDate(x.getDate() - i)
     keys.push(x.toISOString().slice(0, 10))
@@ -11,26 +9,109 @@ function getLast7DayKeys() {
   return keys
 }
 
-export function getLast7DaysEntries(entries) {
-  const keys = getLast7DayKeys()
+export function getLastNDaysEntries(entries, days) {
+  const keys = getLastNDaysKeys(days)
   return keys.map((key) => ({ key, entry: entries[key] ?? null }))
 }
 
-/** Symptom trend: array of { date, label, redness, swelling, itch, pain } for last 7 days */
-export function getSymptomTrendData(entries) {
-  return getLast7DaysEntries(entries).map(({ key, entry }) => ({
+function getSymptomVal(entry, key) {
+  if (key === 'redness') return entry?.redness ?? entry?.darkColor ?? null
+  return entry?.[key] ?? null
+}
+
+function avgSymptomInGroup(items, key) {
+  const vals = items.map(({ entry }) => getSymptomVal(entry, key)).filter((v) => v != null)
+  if (vals.length === 0) return null
+  return vals.reduce((s, v) => s + v, 0) / vals.length
+}
+
+/** Symptom trend: grouped by timeframe. 7 days = per day; 30/90 = per week (avg); 365 = per month (avg) */
+export function getSymptomTrendData(entries, days = 7) {
+  const keys = getLastNDaysKeys(days)
+
+  if (days === 7) {
+    return keys.map((key) => {
+      const entry = entries[key] ?? null
+      const d = new Date(key + 'T12:00:00')
+      return {
+        date: key,
+        label: d.toLocaleDateString('en-US', { weekday: 'short' }),
+        redness: getSymptomVal(entry, 'redness'),
+        swelling: getSymptomVal(entry, 'swelling'),
+        itch: getSymptomVal(entry, 'itch'),
+        pain: getSymptomVal(entry, 'pain'),
+      }
+    })
+  }
+
+  if (days === 30) {
+    const buckets = [[], [], [], []]
+    keys.forEach((key, i) => {
+      const weekIndex = Math.min(3, Math.floor(i / 7))
+      buckets[weekIndex].push({ key, entry: entries[key] ?? null })
+    })
+    return buckets.map((weekItems, wi) => ({
+      date: `week-${wi + 1}`,
+      label: `Week ${wi + 1}`,
+      redness: avgSymptomInGroup(weekItems, 'redness'),
+      swelling: avgSymptomInGroup(weekItems, 'swelling'),
+      itch: avgSymptomInGroup(weekItems, 'itch'),
+      pain: avgSymptomInGroup(weekItems, 'pain'),
+    }))
+  }
+
+  if (days === 90) {
+    const numWeeks = 13
+    const buckets = Array.from({ length: numWeeks }, () => [])
+    keys.forEach((key, i) => {
+      const weekIndex = Math.floor(i / 7)
+      if (weekIndex < numWeeks) buckets[weekIndex].push({ key, entry: entries[key] ?? null })
+    })
+    return buckets.map((weekItems, wi) => ({
+      date: `week-${wi + 1}`,
+      label: `W${wi + 1}`,
+      redness: avgSymptomInGroup(weekItems, 'redness'),
+      swelling: avgSymptomInGroup(weekItems, 'swelling'),
+      itch: avgSymptomInGroup(weekItems, 'itch'),
+      pain: avgSymptomInGroup(weekItems, 'pain'),
+    }))
+  }
+
+  if (days === 365) {
+    const byMonth = {}
+    keys.forEach((key) => {
+      const monthKey = key.slice(0, 7)
+      if (!byMonth[monthKey]) byMonth[monthKey] = []
+      byMonth[monthKey].push({ key, entry: entries[key] ?? null })
+    })
+    const sortedMonths = Object.keys(byMonth).sort()
+    return sortedMonths.map((monthKey) => {
+      const items = byMonth[monthKey]
+      const d = new Date(monthKey + '-01T12:00:00')
+      return {
+        date: monthKey,
+        label: d.toLocaleDateString('en-US', { month: 'short' }),
+        redness: avgSymptomInGroup(items, 'redness'),
+        swelling: avgSymptomInGroup(items, 'swelling'),
+        itch: avgSymptomInGroup(items, 'itch'),
+        pain: avgSymptomInGroup(items, 'pain'),
+      }
+    })
+  }
+
+  return getLastNDaysEntries(entries, days).map(({ key, entry }) => ({
     date: key,
-    label: new Date(key + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }).replace(',', ''),
-    redness: entry?.redness ?? entry?.darkColor ?? null,
-    swelling: entry?.swelling ?? null,
-    itch: entry?.itch ?? null,
-    pain: entry?.pain ?? null,
+    label: key,
+    redness: getSymptomVal(entry, 'redness'),
+    swelling: getSymptomVal(entry, 'swelling'),
+    itch: getSymptomVal(entry, 'itch'),
+    pain: getSymptomVal(entry, 'pain'),
   }))
 }
 
-/** Top 5 triggers in last 7 days: { name, count }[] */
-export function getTopTriggers(entries) {
-  const keys = getLast7DayKeys()
+/** Top 5 triggers in last N days: { name, count }[] */
+export function getTopTriggers(entries, days = 7) {
+  const keys = getLastNDaysKeys(days)
   const count = {}
   for (const key of keys) {
     const e = entries[key]
@@ -55,8 +136,11 @@ export function getTopTriggers(entries) {
 }
 
 /** Correlations: high stress avg itch, poor sleep avg itch, good sleep avg itch, body area patterns */
-export function getCorrelations(entries) {
-  const allEntries = Object.values(entries).filter((e) => e != null)
+export function getCorrelations(entries, days = 7) {
+  const keys = getLastNDaysKeys(days)
+  const periodEntries = {}
+  keys.forEach((k) => { if (entries[k]) periodEntries[k] = entries[k] })
+  const allEntries = Object.values(periodEntries).filter((e) => e != null)
   const highStress = allEntries.filter((e) => e.stress === 4 || e.stress === 5)
   const poorSleep = allEntries.filter((e) => e.sleep === 1)
   const goodSleep = allEntries.filter((e) => e.sleep === 4 || e.sleep === 5)
@@ -68,7 +152,7 @@ export function getCorrelations(entries) {
   }
 
   // Body area patterns: which areas flare with high stress
-  const faceAreas = ['front-head', 'front-eyes', 'front-neck']
+  const faceAreas = ['front-head', 'front-left-eye', 'front-right-eye', 'front-eyes', 'front-neck']
   const highStressDays = allEntries.filter((e) => e.stress === 4 || e.stress === 5)
   const faceFlareDays = highStressDays.filter((e) => {
     if (!e.bodyAreas) return false
@@ -87,9 +171,9 @@ export function getCorrelations(entries) {
   }
 }
 
-/** Weekly summary for last 7 days */
-export function getWeeklySummary(entries) {
-  const keys = getLast7DayKeys()
+/** Summary for last N days */
+export function getWeeklySummary(entries, days = 7) {
+  const keys = getLastNDaysKeys(days)
   const weekEntries = keys.map((k) => entries[k]).filter(Boolean)
   const withItch = weekEntries.filter((e) => e.itch != null)
   const withPain = weekEntries.filter((e) => e.pain != null)

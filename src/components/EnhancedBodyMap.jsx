@@ -2,7 +2,7 @@ import { useState, useMemo } from 'react'
 import BodyAreaSymptomEditor from './BodyAreaSymptomEditor'
 
 const FRONT_ZONES = [
-  'front-head', 'front-eyes', 'front-neck', 'front-left-arm', 'front-right-arm',
+  'front-head', 'front-left-eye', 'front-right-eye', 'front-neck', 'front-left-arm', 'front-right-arm',
   'front-chest', 'front-torso', 'front-left-leg', 'front-right-leg',
 ]
 const BACK_ZONES = [
@@ -68,9 +68,10 @@ export default function EnhancedBodyMap({ bodyAreas = {}, onUpdate }) {
             <svg viewBox="0 0 120 220" className="w-32 h-auto touch-manipulation" role="img" aria-label="Body front">
               {/* Head */}
               <ellipse cx="60" cy="25" rx="22" ry="20" className={frontSelected.has('front-head') ? 'fill-primary-400 stroke-primary-600' : 'fill-seafoam-200 stroke-seafoam-400'} strokeWidth="1.5" onClick={() => toggle('front-head')} />
-              {/* Eyes */}
-              <circle cx="52" cy="22" r="3" className={frontSelected.has('front-eyes') ? 'fill-primary-500 stroke-primary-700' : 'fill-seafoam-300 stroke-seafoam-500'} strokeWidth="1" onClick={() => toggle('front-eyes')} />
-              <circle cx="68" cy="22" r="3" className={frontSelected.has('front-eyes') ? 'fill-primary-500 stroke-primary-700' : 'fill-seafoam-300 stroke-seafoam-500'} strokeWidth="1" onClick={() => toggle('front-eyes')} />
+              {/* Left eye */}
+              <circle cx="52" cy="22" r="5" className={frontSelected.has('front-left-eye') ? 'fill-primary-500 stroke-primary-700' : 'fill-seafoam-300 stroke-seafoam-500'} strokeWidth="1" onClick={(e) => { e.stopPropagation(); toggle('front-left-eye') }} />
+              {/* Right eye */}
+              <circle cx="68" cy="22" r="5" className={frontSelected.has('front-right-eye') ? 'fill-primary-500 stroke-primary-700' : 'fill-seafoam-300 stroke-seafoam-500'} strokeWidth="1" onClick={(e) => { e.stopPropagation(); toggle('front-right-eye') }} />
               {/* Neck */}
               <rect x="48" y="42" width="24" height="18" rx="4" className={frontSelected.has('front-neck') ? 'fill-primary-400 stroke-primary-600' : 'fill-seafoam-200 stroke-seafoam-400'} strokeWidth="1.5" onClick={() => toggle('front-neck')} />
               {/* Chest */}

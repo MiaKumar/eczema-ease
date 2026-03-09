@@ -91,21 +91,35 @@ export default function HomeScreen() {
         label="Redness (0–10)"
         value={entry.redness}
         onChange={(redness) => persist({ redness })}
+        showDefinition
       />
       <SeverityScale
         label="Swelling (0–10)"
         value={entry.swelling}
         onChange={(swelling) => persist({ swelling })}
+        showDefinition
       />
       <SeverityScale
         label="Itch (0–10)"
         value={entry.itch}
         onChange={(itch) => persist({ itch })}
+        showDefinition
       />
       <SeverityScale
         label="Pain (0–10)"
         value={entry.pain}
         onChange={(pain) => persist({ pain })}
+        showDefinition
+      />
+
+      {/* Sleep, Stress, Weather */}
+      <QuickLogIcons
+        sleep={entry.sleep}
+        stress={entry.stress}
+        weather={entry.weather}
+        onSleep={(sleep) => persist({ sleep })}
+        onStress={(stress) => persist({ stress })}
+        onWeather={(weather) => persist({ weather })}
       />
 
       {/* Enhanced Body Map */}
@@ -118,16 +132,6 @@ export default function HomeScreen() {
       <MedicationTracker
         medications={entry.medications || []}
         onUpdate={(medications) => persist({ medications })}
-      />
-
-      {/* Quick Logs */}
-      <QuickLogIcons
-        sleep={entry.sleep}
-        stress={entry.stress}
-        weather={entry.weather}
-        onSleep={(sleep) => persist({ sleep })}
-        onStress={(stress) => persist({ stress })}
-        onWeather={(weather) => persist({ weather })}
       />
     </div>
   )

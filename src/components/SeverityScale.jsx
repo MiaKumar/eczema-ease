@@ -1,4 +1,6 @@
-export default function SeverityScale({ label, value, onChange }) {
+const RATING_DEFINITION = '0 = None, 5 = Moderate, 10 = Severe'
+
+export default function SeverityScale({ label, value, onChange, showDefinition = false }) {
   const scale = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   const num = value ?? null
 
@@ -21,6 +23,9 @@ export default function SeverityScale({ label, value, onChange }) {
           </button>
         ))}
       </div>
+      {showDefinition && (
+        <p className="text-gray-500 mt-2" style={{ fontSize: '12px' }}>{RATING_DEFINITION}</p>
+      )}
       {num !== null && (
         <p className="text-xs text-sage-500 mt-2">
           Selected: {num}/10

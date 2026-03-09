@@ -1,8 +1,8 @@
 const FLARE_OPTIONS = [
-  { value: 'none', label: 'None', color: 'bg-seafoam-100 text-sage-700 border-seafoam-300' },
-  { value: 'mild', label: 'Mild', color: 'bg-yellow-50 text-yellow-700 border-yellow-300' },
-  { value: 'moderate', label: 'Moderate', color: 'bg-orange-50 text-orange-700 border-orange-300' },
-  { value: 'severe', label: 'Severe', color: 'bg-red-50 text-red-700 border-red-300' },
+  { value: 'none', label: 'None', color: 'bg-seafoam-100 text-sage-700 border-seafoam-300', definition: 'No visible symptoms' },
+  { value: 'mild', label: 'Mild', color: 'bg-yellow-50 text-yellow-700 border-yellow-300', definition: 'Minor irritation, barely noticeable' },
+  { value: 'moderate', label: 'Moderate', color: 'bg-orange-50 text-orange-700 border-orange-300', definition: 'Noticeable symptoms, some discomfort' },
+  { value: 'severe', label: 'Severe', color: 'bg-red-50 text-red-700 border-red-300', definition: 'Significant symptoms, major discomfort' },
 ]
 
 export default function FlareSeveritySelector({ value, onChange }) {
@@ -25,6 +25,14 @@ export default function FlareSeveritySelector({ value, onChange }) {
           </button>
         ))}
       </div>
+      <dl className="mt-3 space-y-1 text-gray-500" style={{ fontSize: '12px' }}>
+        {FLARE_OPTIONS.map(({ value: optValue, label, definition }) => (
+          <div key={optValue}>
+            <dt className="inline font-medium text-sage-600">{label}:</dt>
+            <dd className="inline ml-1">{definition}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
   )
 }
