@@ -30,11 +30,11 @@ export default function DateSelector({ value, onChange }) {
   const canGoNext = dateKey < todayKey()
 
   return (
-    <div className="flex items-center justify-between bg-white rounded-xl border-2 border-seafoam-200 p-3 shadow-sm">
+    <div className="flex items-center justify-between bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card">
       <button
         type="button"
         onClick={goPrev}
-        className="p-2 rounded-lg text-primary-600 hover:bg-seafoam-100 active:bg-seafoam-200"
+        className="p-2 rounded-lg text-primary-600 hover:bg-seafoam-100 active:scale-95 transition-transform duration-150"
         aria-label="Previous day"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,7 +51,7 @@ export default function DateSelector({ value, onChange }) {
         type="button"
         onClick={goNext}
         disabled={!canGoNext}
-        className="p-2 rounded-lg text-primary-600 hover:bg-seafoam-100 active:bg-seafoam-200 disabled:opacity-40 disabled:pointer-events-none"
+        className="p-2 rounded-lg text-primary-600 hover:bg-seafoam-100 active:scale-95 transition-transform duration-150 disabled:opacity-40 disabled:pointer-events-none"
         aria-label="Next day"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

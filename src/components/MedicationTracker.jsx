@@ -38,7 +38,7 @@ export default function MedicationTracker({ medications = [], onUpdate }) {
   }
 
   return (
-    <div className="bg-white rounded-2xl border-2 border-seafoam-200 p-4 shadow-sm">
+    <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card">
       <div className="flex justify-between items-center mb-3">
         <p className="text-sm font-semibold text-sage-800">Medications & Treatments</p>
         <button

@@ -59,7 +59,7 @@ export default function EnhancedBodyMap({ bodyAreas = {}, onUpdate }) {
 
   return (
     <div className="space-y-4">
-      <div className="bg-white rounded-2xl border-2 border-seafoam-200 p-4 shadow-sm">
+      <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card">
         <p className="text-sm font-semibold text-sage-800 mb-3">Affected Areas & Symptoms</p>
         <p className="text-xs text-sage-600 mb-3">Tap an area to add symptoms, tap again to edit</p>
         <div className="flex gap-4 justify-center flex-wrap">

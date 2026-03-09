@@ -38,7 +38,7 @@ export default function BodyAreaSymptomEditor({ area, symptoms, onUpdate, onClos
   }
 
   return (
-    <div className="bg-white rounded-2xl border-2 border-seafoam-200 p-4 shadow-lg">
+    <div className="bg-white rounded-[12px] border-2 border-seafoam-200 p-5 shadow-card">
       <div className="flex justify-between items-center mb-4">
         <h3 className="font-semibold text-sage-800">{areaLabels[area] || area}</h3>
         <button
@@ -55,24 +55,28 @@ export default function BodyAreaSymptomEditor({ area, symptoms, onUpdate, onClos
           value={localSymptoms.redness}
           onChange={(v) => update('redness', v)}
           showDefinition
+          iconType="redness"
         />
         <SeverityScale
           label="Swelling (0–10)"
           value={localSymptoms.swelling}
           onChange={(v) => update('swelling', v)}
           showDefinition
+          iconType="swelling"
         />
         <SeverityScale
           label="Itch (0–10)"
           value={localSymptoms.itch}
           onChange={(v) => update('itch', v)}
           showDefinition
+          iconType="itch"
         />
         <SeverityScale
           label="Pain (0–10)"
           value={localSymptoms.pain}
           onChange={(v) => update('pain', v)}
           showDefinition
+          iconType="pain"
         />
       </div>
     </div>

@@ -6,6 +6,20 @@ export default {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        card: '0 2px 12px rgba(0,0,0,0.06)',
+        'card-press': '0 4px 16px rgba(0,0,0,0.08)',
+        'score-glow': '0 0 24px rgba(126, 191, 179, 0.25)',
+      },
+      animation: {
+        fadeIn: 'fadeIn 200ms ease-out',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+      },
       colors: {
         primary: {
           50: '#F0FDFB',

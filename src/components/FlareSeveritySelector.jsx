@@ -7,7 +7,7 @@ const FLARE_OPTIONS = [
 
 export default function FlareSeveritySelector({ value, onChange }) {
   return (
-    <div className="bg-white rounded-2xl border-2 border-seafoam-200 p-4 shadow-sm">
+    <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card transition-shadow duration-200">
       <p className="text-sm font-semibold text-sage-800 mb-3">Overall Flare Severity</p>
       <div className="grid grid-cols-2 gap-3">
         {FLARE_OPTIONS.map(({ value: optValue, label, color }) => (
@@ -15,10 +15,10 @@ export default function FlareSeveritySelector({ value, onChange }) {
             key={optValue}
             type="button"
             onClick={() => onChange(optValue)}
-            className={`py-4 px-3 rounded-xl border-2 font-medium text-sm transition-all ${
+            className={`py-4 px-3 rounded-lg border-2 font-medium text-sm transition-all duration-200 active:scale-[0.98] ${
               value === optValue
-                ? `${color} border-opacity-100 scale-105 shadow-md`
-                : 'bg-seafoam-50 text-sage-600 border-seafoam-200 border-opacity-50 hover:border-opacity-100'
+                ? `${color} border-opacity-100 scale-[1.02] shadow-card-press`
+                : 'bg-seafoam-50 text-sage-600 border-seafoam-200 border-opacity-50 hover:border-opacity-100 hover:bg-seafoam-100'
             }`}
           >
             {label}

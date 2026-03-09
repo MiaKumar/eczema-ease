@@ -24,8 +24,9 @@ const WEATHER_OPTIONS = [
 ]
 
 export default function QuickLogIcons({ sleep, stress, weather, onSleep, onStress, onWeather }) {
+  const btnBase = 'flex flex-col items-center justify-center min-w-[40px] min-h-[40px] w-10 h-10 rounded-lg border-2 text-xs transition-all duration-200 active:scale-95'
   return (
-    <div className="bg-white rounded-xl border-2 border-seafoam-200 p-4 shadow-sm space-y-4">
+    <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card space-y-4">
       <div>
         <p className="text-sm font-medium text-sage-700 mb-2">Sleep quality</p>
         <div className="flex flex-wrap gap-2">
@@ -34,15 +35,15 @@ export default function QuickLogIcons({ sleep, stress, weather, onSleep, onStres
               key={value}
               type="button"
               onClick={() => onSleep(value)}
-              className={`flex flex-col items-center p-2 rounded-lg border-2 text-xs transition-colors ${
+              className={`${btnBase} ${
                 sleep === value
-                  ? 'border-primary-500 bg-seafoam-100 text-primary-700'
-                  : 'border-seafoam-200 bg-seafoam-50 text-sage-600 hover:border-primary-300'
+                  ? 'border-primary-500 bg-seafoam-100 text-primary-700 shadow-sm'
+                  : 'border-seafoam-200 bg-seafoam-50 text-sage-600 hover:border-primary-300 hover:bg-seafoam-100'
               }`}
               title={label}
             >
-              <span className="text-lg">{icon}</span>
-              <span>{label}</span>
+              <span className="text-xl leading-none">{icon}</span>
+              <span className="mt-0.5">{label}</span>
             </button>
           ))}
         </div>
@@ -55,15 +56,15 @@ export default function QuickLogIcons({ sleep, stress, weather, onSleep, onStres
               key={value}
               type="button"
               onClick={() => onStress(value)}
-              className={`flex flex-col items-center p-2 rounded-lg border-2 text-xs transition-colors ${
+              className={`${btnBase} ${
                 stress === value
-                  ? 'border-primary-500 bg-seafoam-100 text-primary-700'
-                  : 'border-seafoam-200 bg-seafoam-50 text-sage-600 hover:border-primary-300'
+                  ? 'border-primary-500 bg-seafoam-100 text-primary-700 shadow-sm'
+                  : 'border-seafoam-200 bg-seafoam-50 text-sage-600 hover:border-primary-300 hover:bg-seafoam-100'
               }`}
               title={label}
             >
-              <span className="text-lg">{icon}</span>
-              <span>{label}</span>
+              <span className="text-xl leading-none">{icon}</span>
+              <span className="mt-0.5">{label}</span>
             </button>
           ))}
         </div>
@@ -76,15 +77,15 @@ export default function QuickLogIcons({ sleep, stress, weather, onSleep, onStres
               key={value}
               type="button"
               onClick={() => onWeather(value)}
-              className={`flex flex-col items-center p-2 rounded-lg border-2 text-xs transition-colors ${
+              className={`${btnBase} ${
                 weather === value
-                  ? 'border-primary-500 bg-seafoam-100 text-primary-700'
-                  : 'border-seafoam-200 bg-seafoam-50 text-sage-600 hover:border-primary-300'
+                  ? 'border-primary-500 bg-seafoam-100 text-primary-700 shadow-sm'
+                  : 'border-seafoam-200 bg-seafoam-50 text-sage-600 hover:border-primary-300 hover:bg-seafoam-100'
               }`}
               title={label}
             >
-              <span className="text-lg">{icon}</span>
-              <span>{label}</span>
+              <span className="text-xl leading-none">{icon}</span>
+              <span className="mt-0.5">{label}</span>
             </button>
           ))}
         </div>

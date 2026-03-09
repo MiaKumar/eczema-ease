@@ -45,10 +45,17 @@ export default function HomeScreen() {
   const dashOffset = RING_C * (1 - pct)
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       {/* Today's Eczema Score */}
-      <div className="flex flex-col items-center">
-        <div className="relative" style={{ width: RING_SIZE, height: RING_SIZE }}>
+      <div className="flex flex-col items-center mt-8">
+        <div
+          className="relative rounded-full flex items-center justify-center shadow-score-glow"
+          style={{
+            width: RING_SIZE,
+            height: RING_SIZE,
+            background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.9), rgba(224,251,247,0.4))',
+          }}
+        >
           <svg width={RING_SIZE} height={RING_SIZE} className="rotate-[-90deg]" aria-hidden="true">
             <circle
               cx={RING_SIZE / 2}
@@ -68,7 +75,7 @@ export default function HomeScreen() {
               strokeLinecap="round"
               strokeDasharray={RING_C}
               strokeDashoffset={dashOffset}
-              style={{ transition: 'stroke-dashoffset 0.4s ease-out, stroke 0.3s ease-out' }}
+              style={{ transition: 'stroke-dashoffset 0.4s cubic-bezier(0.4, 0, 0.2, 1), stroke 0.3s ease-out' }}
             />
           </svg>
           <div className="absolute inset-0 flex items-center justify-center">
@@ -92,24 +99,28 @@ export default function HomeScreen() {
         value={entry.redness}
         onChange={(redness) => persist({ redness })}
         showDefinition
+        iconType="redness"
       />
       <SeverityScale
         label="Swelling (0–10)"
         value={entry.swelling}
         onChange={(swelling) => persist({ swelling })}
         showDefinition
+        iconType="swelling"
       />
       <SeverityScale
         label="Itch (0–10)"
         value={entry.itch}
         onChange={(itch) => persist({ itch })}
         showDefinition
+        iconType="itch"
       />
       <SeverityScale
         label="Pain (0–10)"
         value={entry.pain}
         onChange={(pain) => persist({ pain })}
         showDefinition
+        iconType="pain"
       />
 
       {/* Sleep, Stress, Weather */}
