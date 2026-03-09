@@ -14,7 +14,7 @@ export default function SeverityChart({ entries, limit = 14, timeframeLabel = ''
 
   if (data.length === 0) {
     return (
-      <div className="bg-white rounded-xl border-2 border-seafoam-200 p-6 shadow-sm text-center text-sage-500 text-sm">
+      <div className="bg-white rounded-[12px] border border-seafoam-200 p-6 shadow-card text-center text-sage-500 text-sm">
         Log itch or pain on the Home screen to see trends here.
       </div>
     )
@@ -24,7 +24,7 @@ export default function SeverityChart({ entries, limit = 14, timeframeLabel = ''
   const chartHeight = 120
 
   return (
-    <div className="bg-white rounded-xl border-2 border-seafoam-200 p-4 shadow-sm">
+    <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card">
       <p className="text-sm font-medium text-sage-700 mb-3">
         Severity trend{timeframeLabel ? ` (${timeframeLabel})` : ` (last ${limit} days)`}
       </p>

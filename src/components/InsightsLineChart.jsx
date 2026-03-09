@@ -22,7 +22,7 @@ export default function InsightsLineChart({ data, valueKey, label }) {
 
   if (!hasData) {
     return (
-      <div className="bg-white rounded-xl border-2 border-seafoam-200 p-4 shadow-sm">
+      <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card">
         <p className="text-sm font-medium text-sage-700 mb-2">{label}</p>
         <p className="text-sage-500 text-sm py-6 text-center">No data for this period</p>
       </div>
@@ -30,7 +30,7 @@ export default function InsightsLineChart({ data, valueKey, label }) {
   }
 
   return (
-    <div className="bg-white rounded-xl border-2 border-seafoam-200 p-4 shadow-sm">
+    <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card">
       <p className="text-sm font-medium text-sage-700 mb-3">{label}</p>
       <div className="relative w-full" style={{ height: CHART_HEIGHT + 24 }}>
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 w-full h-[100px] text-primary-500">

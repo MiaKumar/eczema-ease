@@ -51,7 +51,7 @@ export default function HistoryView() {
   return (
     <div className="space-y-4">
       {/* Timeframe selector */}
-      <div className="bg-white rounded-2xl border-2 border-seafoam-200 p-3 shadow-sm">
+      <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card">
         <p className="text-xs font-semibold text-sage-700 mb-2">Timeframe</p>
         <div className="flex gap-2">
           {TIMEFRAMES.map(({ days, label }) => (
@@ -80,7 +80,7 @@ export default function HistoryView() {
       />
 
       {selectedDay && (
-        <div className="bg-white rounded-2xl border-2 border-seafoam-200 p-4 shadow-sm">
+        <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card">
           <div className="flex justify-between items-start mb-3">
             <h2 className="font-semibold text-sage-800">{displayDate}</h2>
             <button

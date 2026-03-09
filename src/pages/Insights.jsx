@@ -85,7 +85,7 @@ export default function Insights() {
       {/* 3. Basic correlations – text summaries */}
       <section>
         <h3 className="text-sm font-semibold text-sage-700 mb-3">Correlations</h3>
-        <div className="bg-white rounded-xl border-2 border-seafoam-200 p-4 shadow-sm space-y-3">
+        <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card space-y-3">
           {correlations.highStressDays > 0 && correlations.highStressAvgItch != null ? (
             <p className="text-sm text-sage-700">
               When stress level is <strong>High or Very High</strong>, your average itch severity is{' '}
@@ -121,7 +121,7 @@ export default function Insights() {
       {/* 4. Period summary */}
       <section>
         <h3 className="text-sm font-semibold text-sage-700 mb-3">Summary ({timeframeLabel})</h3>
-        <div className="bg-white rounded-xl border-2 border-seafoam-200 p-4 shadow-sm">
+        <div className="bg-white rounded-[12px] border border-seafoam-200 p-5 shadow-card">
           <dl className="grid grid-cols-1 gap-3 text-sm">
             {summary.avgRedness != null && (
               <div className="flex justify-between">
